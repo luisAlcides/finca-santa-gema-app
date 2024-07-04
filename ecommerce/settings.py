@@ -64,7 +64,9 @@ if not DATABASE_URL:
     raise ValueError("No DATABASE_URL environment variable set")
 
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, engine='django.db.backends.postgresql_psycopg2')
+    'default': dj_database_url.parse(DATABASE_URL,
+                                     conn_max_age=600,
+                                     engine='django.db.backends.postgresql')
 }
 
 # Password validation
