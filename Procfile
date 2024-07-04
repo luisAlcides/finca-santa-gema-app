@@ -1,1 +1,1 @@
-web: gunicorn ecommerce.wsgi
+web: python3 manage.py collectstatic && gunicorn ecommerce.wsgi
