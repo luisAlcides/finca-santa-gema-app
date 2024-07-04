@@ -2,7 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.idea/*
+.idea
+sqlite3.db
 # C extensions
 *.so
 
