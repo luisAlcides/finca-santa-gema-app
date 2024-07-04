@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+{% load custom_tags custom_filters %}
+
+{% block content %}
+<h2>Mi Carrito</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Total</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart_items %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>
+        {% if currency == 'USD' %}
+        ${{ item.product|get_price_in_currency:'USD'|floatformat:2 }}
+        {% else %}
+        C${{ item.product|get_price_in_currency:'NIO' }}
+        {% endif %}
+      </td>
+      <td>
+        {% if currency == 'USD' %}
+        ${{ item.product|get_price_in_currency:'USD'|multiply:item.quantity|floatformat:2 }}
+        {% else %}
+        C${{ item.product|get_price_in_currency:'NIO'|multiply:item.quantity }}
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'checkout' %}" class="btn btn-success">Comprar</a>
+{% endblock %}
