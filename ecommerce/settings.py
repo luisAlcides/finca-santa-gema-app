@@ -1,8 +1,9 @@
+from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
-from pathlib import Path
 
+# Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,7 +12,7 @@ SECRET_KEY = 'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','finca-santa-gema-app-production.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'finca-santa-gema-app-production.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,12 +58,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-# Database
+# Configuración de la base de datos
+DATABASE_URL = os.getenv('DATABASE_URL')
+if not DATABASE_URL:
+    raise ValueError("No DATABASE_URL environment variable set")
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        engine='django.db.backends.postgresql_pyscopg2'
-    )
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, engine='django.db.backends.postgresql_psycopg2')
 }
 
 # Password validation
@@ -81,7 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -90,7 +91,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
