@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','finca-santa-gema-app-production.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1','finca-santa-gema-app-production.up.railway.app']
 
 
 # Application definition
