@@ -60,11 +60,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # Configuración de la base de datos
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL),
-    'ENGINE': 'django.db.backends.postgresql',
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
 
 # Password validation
