@@ -10,7 +10,7 @@ SECRET_KEY =  'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', 'finca-santa-gema-app-production.up.railway.app', 'gpdcgsplctzqhfmlcsbr.supabase.co']
 # Or * to allow all
 ALLOWED_HOSTS = ['*']
 
@@ -108,4 +108,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-CSRF_TRUSTED_ORIGINS = ['https://finca-santa-gema-app-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://finca-santa-gema-app-production.up.railway.app', 'https://gpdcgsplctzqhfmlcsbr.supabase.co']
