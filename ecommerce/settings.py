@@ -66,7 +66,7 @@ DATABASES = {
     )
 }
 
-# Asegúrate de que DATABASE_URL esté correctamente configurado
+# Verificar si DATABASE_URL está configurado correctamente
 if not DATABASES['default']:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
@@ -77,7 +77,7 @@ if not DATABASES['default']:
         'PORT': os.environ.get('DB_PORT', '6543'),
     }
 
-# Opcional: Configuración adicional para manejar SSL en Railway
+# Configuración adicional para manejar SSL en Railway
 DATABASES['default']['OPTIONS'] = {
     'sslmode': 'require',
 }
