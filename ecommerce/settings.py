@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
-    'store',
+    'store.apps.StoreConfig',
     'store.templatetags'
 ]
 
@@ -62,12 +62,15 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        engine='django.db.backends.postgresql'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
+    }
 }
 
 
