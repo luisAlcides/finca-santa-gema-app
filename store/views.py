@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.contrib.auth.forms import AuthenticationForm
 from django.dispatch import receiver
+from django.http import HttpResponse
+from django.db import connection
 
 def login_view(request):
     if request.method == 'POST':
@@ -191,3 +193,10 @@ def profile_settings(request):
     else:
         form = ProfileForm(instance=request.user.profile)
     return render(request, 'store/profile_settings.html', {'form': form})
+
+def test_db_connection(request):
+    try:
+        connection.ensure_connection()
+        return HttpResponse("Conexión a la base de datos exitosa")
+    except Exception as e:
+        return HttpResponse(f"Error de conexión: {e}")
