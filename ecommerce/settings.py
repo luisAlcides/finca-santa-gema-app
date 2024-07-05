@@ -62,8 +62,21 @@ DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
-if not DATABASES['default'].get('ENGINE'):
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+# Asegúrate de que DATABASE_URL esté correctamente configurado
+if not DATABASES['default']:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+
+# Opcional: Configuración adicional para manejar SSL en Railway
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
