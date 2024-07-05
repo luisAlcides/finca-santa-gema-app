@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 
 # Cargar variables de entorno desde el archivo .env
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv()
+SECRET_KEY =  'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g'
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g')
+DEBUG = True
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = ['127.0.0.1', 'finca-santa-gema-app-production.up.railway.app']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+# Or * to allow all
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,16 +58,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-# Configuración de la base de datos
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 DATABASES = {
-    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
+    }
 }
 
-# Validar que la configuración tenga el valor NAME
-if 'NAME' not in DATABASES['default']:
-    raise ImproperlyConfigured("La configuración de la base de datos está incompleta. Por favor, asegúrate de que el valor NAME está presente.")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -96,8 +98,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
