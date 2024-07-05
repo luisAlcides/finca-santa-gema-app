@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 # Cargar variables de entorno desde el archivo .env
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
-SECRET_KEY =  'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g'
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g')
 
 DEBUG = True
 
@@ -58,8 +59,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+# Configuración de la Base de Datos
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
 # Asegúrate de que DATABASE_URL esté correctamente configurado
@@ -70,7 +74,7 @@ if not DATABASES['default']:
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'PORT': os.environ.get('DB_PORT', '6543'),
     }
 
 # Opcional: Configuración adicional para manejar SSL en Railway
@@ -78,7 +82,7 @@ DATABASES['default']['OPTIONS'] = {
     'sslmode': 'require',
 }
 
-# Password validation
+# Validación de Contraseñas
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -106,7 +110,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
