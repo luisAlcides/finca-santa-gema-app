@@ -60,14 +60,16 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # Configuración de la base de datos
 DATABASE_URL = os.getenv('DATABASE_URL')
-if not DATABASE_URL:
-    raise ValueError("No DATABASE_URL environment variable set")
+
+
 
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL,
-                                     conn_max_age=600,
-                                     engine='django.db.backends.postgresql')
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        engine='django.db.backends.postgresql'
+    )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
