@@ -4,9 +4,10 @@ import dj_database_url
 from dotenv import load_dotenv
 
 # Cargar variables de entorno desde el archivo .env
-load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-1k6ym+kof7s2$$a36ld2ytk1!lm-&3yyllr$ex(ogo)01jha#g')
 
