@@ -4,8 +4,6 @@ import dj_database_url
 from dotenv import load_dotenv
 
 # Cargar variables de entorno desde el archivo .env
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
@@ -66,8 +64,9 @@ DATABASES = {
     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
 
-if 'ENGINE' not in DATABASES['default']:
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+# Validar que la configuración tenga el valor NAME
+if 'NAME' not in DATABASES['default']:
+    raise ImproperlyConfigured("La configuración de la base de datos está incompleta. Por favor, asegúrate de que el valor NAME está presente.")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
